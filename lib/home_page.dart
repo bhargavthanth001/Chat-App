@@ -55,57 +55,54 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Center(
-        child: Column(
-          children: [
-            StreamBuilder<List<ChatUser>>(
-              stream: DBHelper.getAllUsers(),
-              builder: (context, snapshot) {
-                debugPrint(snapshot.data.toString());
-                if (snapshot.hasData) {
-                  final responseData = snapshot.data!;
-                  debugPrint(responseData.toString());
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: responseData.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          color: const Color.fromARGB(255, 234, 248, 255),
-                          child: ListTile(
-                            leading: SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: ClipOval(
-                                clipBehavior: Clip.antiAlias,
-                                child: Image.network(
-                                  responseData[index].image,
-                                ),
-                              ),
+        child: StreamBuilder<List<ChatUser>>(
+          stream: DBHelper.getAllUsers(),
+          builder: (context, snapshot) {
+            debugPrint(snapshot.data.toString());
+            if (snapshot.hasData) {
+              final responseData = snapshot.data!;
+              debugPrint(responseData.toString());
+              return ListView.builder(
+                itemCount: responseData.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: const Color.fromARGB(255, 234, 248, 255),
+                    child: ListTile(
+                      leading: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: ClipOval(
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.network(
+                            responseData[index].image,
+                          ),
+                        ),
+                      ),
+                      title: Text(responseData[index].name),
+                      subtitle: Text(responseData[index].about),
+                      onTap: () {
+                        debugPrint(responseData[index].id);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                              user: responseData[index],
                             ),
-                            title: Text(responseData[index].name),
-                            subtitle: Text(responseData[index].about),
-                            onTap: () {
-                              debugPrint(responseData[index].id);
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ChatPage(
-                                    user: responseData[index],
-                                  ),
-                                ),
-                              );
-                            },
                           ),
                         );
                       },
                     ),
                   );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ],
+                },
+              );
+            } else {
+              return const Align(
+                alignment: Alignment.center,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
         ),
       ),
     );
