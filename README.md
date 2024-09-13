@@ -1,16 +1,41 @@
-# chat_app
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
 
-A new Flutter project.
+class HelloWorld {
+    public static void main(String[] args) {
+        int rows = 6;  
+        int cols = 4;
+        
+        int[][] points = {
+            {1, 5}, 
+            {2, 4}, {2, 5}, 
+            {3, 1}, 
+            {4, 1}, {4, 2},
+        };
+        
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++){
+                if(i == 0  || i == 5){
+                    System.out.print("*****");
+                }else if(j == 0  || j == 5){
+                    System.out.print("*");
+                }else{
+                    for(int k = 0; k < 7; k++){
+                        System.out.print(" ");
+                    }
+                }
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+            }
+            System.out.println();
+        }
+    
+    }
+    private static boolean isPoint(int i,int j, int[][] positions){
+        for (int[] position : positions) {
+            if (position[0] == i && position[1] == j) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
